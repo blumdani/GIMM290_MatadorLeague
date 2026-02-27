@@ -38,6 +38,7 @@ public class SelectLevel : MonoBehaviour
         }
         else if(this.gameObject.name == "ExitGame")
         {
+            Debug.Log("Exit clicked");
             Application.Quit();
         }
         else if(this.gameObject.name == "BackToMenu")

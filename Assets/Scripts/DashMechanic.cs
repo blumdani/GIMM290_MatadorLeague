@@ -12,7 +12,6 @@ public class DashMechanic : MonoBehaviour
     public float dashTime;
     private float dashCooldown = 1.5f;
     private bool canDash = true;
-    public CaptureData cd;
     public TMP_Text timeText;
 
     public Image staminaBar;

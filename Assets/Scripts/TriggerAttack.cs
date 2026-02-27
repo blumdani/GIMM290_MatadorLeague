@@ -28,6 +28,7 @@ public class TriggerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //If attack button is pressed and the attack animation is not already playing, then attack.
         if(Input.GetKeyDown(KeyCode.F) && !attackAnimator.GetBool("attacking"))
         {
             attackAnimator.SetBool("attacking", true);
@@ -38,6 +39,7 @@ public class TriggerAttack : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        //If the sword collides with the bull during the attack animation, and the bull is injured, then deal damage.
         if (collision.gameObject.CompareTag("Bull") && attackAnimator.GetBool("attacking") && bull.GetComponent<BullStateManager>().currentState == bull.GetComponent<BullStateManager>().injuredState)
         {
             Debug.Log("Bull has been hit!");
@@ -54,14 +56,9 @@ public class TriggerAttack : MonoBehaviour
         }
     }
 
-    void SlowDown()
-    {
-        Time.timeScale = slowDownFactor;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
-    }
-
     IEnumerator ResetAttack()
     {
+        //Wait for the animation to finish, then disable the sword collider (so the bull does not run into it)
         yield return new WaitForSeconds(.45f);
         sword.GetComponent<Collider>().enabled = false;
         attackAnimator.SetBool("attacking", false);
@@ -69,10 +66,11 @@ public class TriggerAttack : MonoBehaviour
 
     IEnumerator EndGame()
     {
+        //Destroy the bull and then load the win scene
         yield return new WaitForSeconds(.25f);
         Destroy(bull);
         yield return new WaitForSeconds(.25f);
         SceneManager.LoadScene("YouWon");
-        yield return null; // Ensure the method yields a value
+        yield return null;
     }
 }
